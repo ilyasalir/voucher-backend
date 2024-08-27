@@ -6,7 +6,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +18,7 @@ func AddOrder(c *gin.Context) {
 		ServiceType string    `json:"service_type" binding:"required"`
 		Address     string    `json:"address" binding:"omitempty"`
 		OrderTime   time.Time `json:"order_time" binding:"required"`
-		Services    []string  `json:"services" binding:"omitempty,dive,required"`
+		Services    string    `json:"services" binding:"required"`
 	}
 
 	// Bind data JSON ke struct AddOrderRequest
@@ -90,24 +89,8 @@ func AddOrder(c *gin.Context) {
 		ServiceType: body.ServiceType,
 		Address:     body.Address,
 		OrderTime:   body.OrderTime,
+		Services:    body.Services,
 	}
-
-	// Menambahkan layanan (services) ke order
-	var orderServices []models.Service
-	for _, serviceName := range body.Services {
-		// Gunakan title case saat memeriksa keberadaan layanan
-		titleCaseName := strings.Title(serviceName)
-		service := models.Service{Name: titleCaseName}
-
-		if result := tx.FirstOrCreate(&service, models.Service{Name: titleCaseName}); result.Error != nil {
-			tx.Rollback()
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to add service", "details": result.Error.Error()})
-			return
-		}
-		orderServices = append(orderServices, service)
-	}
-
-	newOrder.Services = orderServices
 
 	// Simpan order baru ke database
 	if result := tx.Create(&newOrder); result.Error != nil {
@@ -117,7 +100,7 @@ func AddOrder(c *gin.Context) {
 	}
 
 	// Preload data Car dan Services saat mengembalikan respons
-	if err := tx.Preload("Car.CarType.Brand").Preload("Car.Color").Preload("Services").First(&newOrder).Error; err != nil {
+	if err := tx.Preload("Car.CarType.Brand").Preload("Car.Color").First(&newOrder).Error; err != nil {
 		tx.Rollback()
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to preload related data", "details": err.Error()})
 		return
@@ -293,7 +276,7 @@ func GetOrder(c *gin.Context) {
 	var orders []models.Order
 
 	// Filter berdasarkan user_id dan date_string
-	query := tx.Preload("User").Preload("Car.CarType.Brand").Preload("Car.Color").Preload("Services")
+	query := tx.Preload("User").Preload("Car.CarType.Brand").Preload("Car.Color")
 
 	if userID != "" {
 		query = query.Where("user_id = ?", userID)

@@ -8,7 +8,7 @@ import (
 
 func LoadEnvVariables() {
 	// Menggunakan path absolut sesuai dengan petunjuk Render
-	secretFilePath := "/etc/secrets/.env"
+	secretFilePath := ".env"
 
 	err := godotenv.Load(secretFilePath)
 	// err := godotenv.Load()

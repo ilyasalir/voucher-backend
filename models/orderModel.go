@@ -18,5 +18,5 @@ type Order struct {
 	Status      string    `json:"status" gorm:"default:PENDING"`
 	User        User      `json:"user" gorm:"foreignKey:UserID;"`
 	Car         Car       `json:"car" gorm:"foreignKey:CarID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
-	Services    []Service `json:"services" gorm:"many2many:order_services;"`
+	Services    string    `json:"services" gorm:"many2many:order_services;"`
 }

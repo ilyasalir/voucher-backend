@@ -47,6 +47,7 @@ func main() {
 	{
 		authRoutes.POST("/register", controllers.RegisterWithCarOrOrder)
 		authRoutes.POST("/login", controllers.Login)
+		authRoutes.POST("/logingoogle", controllers.LoginGoogle)
 		authRoutes.GET("/checkEmail", controllers.IsEmailExist)
 		// authRoutes.POST("/logout", middleware.RequireAuth, controllers.Logout)
 		authRoutes.PUT("/edit", middleware.RequireAuth, controllers.EditProfile)
@@ -102,12 +103,45 @@ func main() {
 		serviceRoutes.GET("", middleware.RequireAuth, controllers.GetServices)
 	}
 
+	articleRoutes := r.Group("/article")
+	{
+		articleRoutes.POST("", middleware.RequireAuth, controllers.AddArticle)
+		articleRoutes.GET("", middleware.RequireAuth, controllers.GetAllArticle)
+		articleRoutes.GET("get", controllers.GetAllArticle)
+		articleRoutes.GET("/byid/:id", controllers.GetArticleDetails)
+		articleRoutes.POST("/bytag", controllers.GetArticleById)
+		articleRoutes.GET("/categorybyid/:id", controllers.GetArticleByCategory)
+		articleRoutes.GET("/tag/:id", controllers.GetArticleByTag)
+		articleRoutes.GET("/tagbyid/:id", controllers.GetTagById)
+
+		//category
+		articleRoutes.GET("/category", controllers.GetCategory)
+		articleRoutes.GET("/category/:name", controllers.GetCategoryIdByName)
+
+	}
+
 	adminRoutes := r.Group("/admin")
 	{
+		//article
+		adminRoutes.POST("/article/add", middleware.RequireAdmin, controllers.AddArticle)
+		adminRoutes.GET("/article", middleware.RequireAdmin, controllers.GetAllArticle)
+		adminRoutes.PUT("/article/status/:id", middleware.RequireAuth, controllers.UpdateStatus)
+		adminRoutes.DELETE("article/:id", middleware.RequireAuth, controllers.DeleteArticle)
+		adminRoutes.GET("/article/:id", middleware.RequireAuth, controllers.GetArticleDetail)
+		adminRoutes.PUT("/article/edit/:id", middleware.RequireAuth, controllers.EditArticle)
+
+		//article category
+		adminRoutes.POST("/category/add", middleware.RequireAdmin, controllers.AddCategory)
+		adminRoutes.GET("/category", middleware.RequireAdmin, controllers.GetCategory)
+		adminRoutes.DELETE("/category/:id", middleware.RequireAuth, controllers.DeleteCategory)
+
+		adminRoutes.GET("/article/tag", middleware.RequireAdmin, controllers.GetTags)
+
 		adminRoutes.GET("/cars", middleware.RequireAdmin, controllers.GetCarsByUserId)
 		adminRoutes.GET("/users", middleware.RequireAdmin, controllers.GetAllUsers)
 		adminRoutes.GET("/usersbyid", middleware.RequireAdmin, controllers.GetUsersByUserId)
 		adminRoutes.GET("/stnk", middleware.RequireAdmin, controllers.GetAllStnk)
+		adminRoutes.GET("", middleware.RequireAdmin, controllers.GetAllArticle)
 		adminRoutes.PUT("/user/:id", middleware.RequireAdmin, controllers.EditUser)
 		adminRoutes.POST("/car", middleware.RequireAdmin, controllers.AddCarByAdmin)
 		adminRoutes.POST("/register", middleware.RequireAdmin, controllers.Register)

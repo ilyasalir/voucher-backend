@@ -315,6 +315,27 @@ func EditCar(c *gin.Context) {
 	}
 
 	// Update data mobil dengan nilai yang baru
+	if body.BrandID != 0 && body.FrameNumber == "" {
+		existingCar.FrameNumber = ""
+	}
+	if body.BrandID != 0 && body.EngineNumber == "" {
+		existingCar.EngineNumber = ""
+	}
+	if body.BrandID != 0 && body.Kilometer == 0 {
+		existingCar.Kilometer = 0
+	}
+	if body.BrandID != 0 && body.FrameNumber != "" {
+		// Handle the case when FrameNumber has a value
+		existingCar.FrameNumber = body.FrameNumber
+	}
+	if body.BrandID != 0 && body.EngineNumber != "" {
+		// Handle the case when EngineNumber has a value
+		existingCar.EngineNumber = body.EngineNumber
+	}
+	if body.BrandID != 0 && body.Kilometer != 0 {
+		// Handle the case when Kilometer has a value
+		existingCar.Kilometer = body.Kilometer
+	}
 	if body.LicensePlat != "" {
 		existingCar.LicensePlat = body.LicensePlat
 	}

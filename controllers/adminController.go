@@ -58,7 +58,7 @@ func GetCarsByUserId(c *gin.Context) {
 
 	// Query cars based on user ID
 	var cars []models.Car
-	if err := initializers.DB.Where("user_id = ?", userIdInt).Preload("CarType.Brand").Preload("Color").Find(&cars).Error; err != nil {
+	if err := initializers.DB.Where("user_id = ?", userIdInt).Preload("CarType.Brand").Preload("Color").Preload("User").Find(&cars).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get cars", "details": err.Error()})
 		return
 	}
