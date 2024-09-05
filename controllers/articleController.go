@@ -215,7 +215,7 @@ func DeleteArticle(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "article and associated orders and cars deleted successfully"})
+	c.JSON(http.StatusOK, gin.H{"message": "article deleted successfully"})
 }
 
 func EditArticle(c *gin.Context) {
@@ -281,7 +281,14 @@ func EditArticle(c *gin.Context) {
 
 	// Update data artikel dengan nilai yang baru
 	if body.Category != nil {
-		existingArticle.CategoryID = body.Category
+		// Compare the dereferenced value to 0
+		if *body.Category == 0 {
+			// Use the existing category ID if the new category is 0
+			existingArticle.CategoryID = existingArticle.CategoryID
+		} else {
+			// Update the CategoryID if a valid non-zero value is provided
+			existingArticle.CategoryID = body.Category
+		}
 	}
 	if body.Title != "" {
 		existingArticle.Title = body.Title

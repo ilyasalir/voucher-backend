@@ -88,6 +88,11 @@ func main() {
 		orderRoutes.PUT("/price/:id", middleware.RequireAuth, controllers.UpdatePriceOrder)
 	}
 
+	emailRoutes := r.Group("/email")
+	{
+		emailRoutes.GET("", middleware.RequireAuth, controllers.GetEmailAdmin)
+	}
+
 	colorRoutes := r.Group("/color")
 	{
 		colorRoutes.GET("", controllers.GetColors)
@@ -136,6 +141,11 @@ func main() {
 		adminRoutes.DELETE("/category/:id", middleware.RequireAuth, controllers.DeleteCategory)
 
 		adminRoutes.GET("/article/tag", middleware.RequireAdmin, controllers.GetTags)
+
+		//email admin
+		adminRoutes.GET("/email", middleware.RequireAdmin, controllers.GetEmailAdmin)
+		adminRoutes.POST("/email/add", middleware.RequireAdmin, controllers.AddEmailAdmin)
+		adminRoutes.DELETE("/email/delete/:id", middleware.RequireAdmin, controllers.DeleteEmailAdmin)
 
 		adminRoutes.GET("/cars", middleware.RequireAdmin, controllers.GetCarsByUserId)
 		adminRoutes.GET("/users", middleware.RequireAdmin, controllers.GetAllUsers)
