@@ -61,6 +61,15 @@ func main() {
 		addressRoutes.PUT("/:id", middleware.RequireAuth, controllers.EditAddress)
 	}
 
+	inquiryRoutes := r.Group("/inquiry")
+	{
+		inquiryRoutes.POST("", controllers.AddInquiry)
+		inquiryRoutes.DELETE("/:id", middleware.RequireAuth, controllers.DeleteInquiry)
+		inquiryRoutes.PUT("/:id", middleware.RequireAuth, controllers.EditInquiry)
+		inquiryRoutes.GET("", middleware.RequireAuth, controllers.GetAllInquiries)
+		inquiryRoutes.PUT("/status/:id", middleware.RequireAuth, controllers.UpdateStatusInquiry)
+	}
+
 	stnkRoutes := r.Group("/stnk")
 	{
 		stnkRoutes.POST("", middleware.RequireAuth, controllers.AddStnk)
@@ -90,7 +99,7 @@ func main() {
 
 	emailRoutes := r.Group("/email")
 	{
-		emailRoutes.GET("", middleware.RequireAuth, controllers.GetEmailAdmin)
+		emailRoutes.GET("", controllers.GetEmailAdmin)
 	}
 
 	colorRoutes := r.Group("/color")
