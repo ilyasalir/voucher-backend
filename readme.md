@@ -17,7 +17,7 @@
 1. Pindah ke direktori proyek yang baru saja di-clone:
 
    ```bash
-   cd carport-backend
+   cd voucher-backend
    ```
 
 2. Jalankan perintah berikut untuk menginstal library dan dependensi:
@@ -33,7 +33,6 @@
    ```
    PORT=[Untuk menjalankan aplikasi]
    BD="host=[host] user=[username_db] password=[password_db] dbname=[name_db] port=[port_db] sslmode=disable"
-   SECRET=[jwt_scret]
    ```
 
 ## Langkah 3: Menjalankan Aplikasi dengan CompileDaemon
@@ -51,7 +50,7 @@
 2. Jalankan aplikasi menggunakan CompileDaemon:
 
    ```bash
-   CompileDaemon -command="./carport-backend"
+   CompileDaemon -command="./voucher-backend"
    ```
 
 3. Aplikasi akan mulai berjalan, dan CompileDaemon akan memantau perubahan file secara otomatis. Setiap kali Anda menyimpan perubahan pada file, CompileDaemon akan mengompilasi ulang dan menjalankan aplikasi.

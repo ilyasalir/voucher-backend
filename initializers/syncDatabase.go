@@ -1,7 +1,7 @@
 package initializers
 
-import "carport-backend/models"
+import "voucher-backend/models"
 
 func SyncDatabase() {
-	DB.AutoMigrate(&models.User{}, &models.Address{}, &models.Brand{}, &models.CarType{}, &models.Color{}, &models.Car{}, &models.Service{}, &models.Order{}, &models.OrderService{}, &models.Stnk{}, &models.Article{}, &models.Category{}, &models.Tag{}, &models.ArticleTag{}, &models.EmailAdmin{}, &models.Inquiry{})
+	DB.AutoMigrate(&models.Brand{}, &models.Voucher{}, &models.Transaction{}, &models.VoucherRedeem{})
 }

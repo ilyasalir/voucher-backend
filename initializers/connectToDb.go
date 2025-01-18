@@ -21,11 +21,10 @@ func ConnectToDb() {
 		log.Fatalf("Failed to open database: %v", err)
 	}
 
-	// Connection pool configurations
-	sqlDB.SetMaxOpenConns(10)                  // Lower the max open connections
-	sqlDB.SetMaxIdleConns(10)                  // Lower the max idle connections
-	sqlDB.SetConnMaxLifetime(30 * time.Minute) // Reuse connections for 30 minutes
-	sqlDB.SetConnMaxIdleTime(10 * time.Minute) // Idle connections released after 10 minutes
+	sqlDB.SetMaxOpenConns(10)
+	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetConnMaxLifetime(30 * time.Minute)
+	sqlDB.SetConnMaxIdleTime(10 * time.Minute)
 
 	const maxRetries = 3
 	retryCount := 0
@@ -39,10 +38,12 @@ func ConnectToDb() {
 		}
 		retryCount++
 		log.Printf("Retrying to connect to the database (%d/%d)...", retryCount, maxRetries)
-		time.Sleep(2 * time.Second) // Wait before retrying
+		time.Sleep(2 * time.Second)
 	}
 
 	if err != nil {
 		log.Fatalf("Failed to connect to database after %d attempts: %v", retryCount, err)
+	} else {
+		log.Println("Connected to the database successfully")
 	}
 }
