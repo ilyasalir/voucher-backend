@@ -68,15 +68,32 @@
 ## Langkah 5: Endpoint dan format input data
 
 1. Add Brand
-   Endpoint : [http://localhost:3000/brand]
+
+   Endpoint : 
+   
+   ```
+   http://localhost:3000/brand
+   ```
+
    input json :
+
+   ```
    {
       "name" : "Indomaret"
    }
+   ```
 
 2. Add Voucher
-   Endpoint : [http://localhost:3000/voucher]
+
+   Endpoint : 
+   
+   ```
+   http://localhost:3000/voucher
+   ```
+
    input json :
+   
+   ```
    {
     "name" : "Voucher Indomaret",
     "discount" : 50,
@@ -84,6 +101,7 @@
     "quantity" : 100,
     "brand_id" : 2
    }
+   ```
 
 3. Get Voucher by Voucher ID
    Endpoint : [http://localhost:3000/voucher/:id] 
