@@ -50,6 +50,7 @@ func main() {
 	transactionRoutes := r.Group("/transaction")
 	{
 		transactionRoutes.POST("/redemption", controllers.RedeemVouchers)
+		transactionRoutes.GET("/redemption/:id", controllers.GetTransactionByID)
 	}
 
 	r.Run()

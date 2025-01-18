@@ -63,3 +63,54 @@
    Contoh: [http://localhost:3000](http://localhost:3000)
 
    Aplikasi Anda sekarang harus berjalan dan dapat diakses di alamat yang ditentukan.
+
+
+## Langkah 5: Endpoint dan format input data
+
+1. Add Brand
+   Endpoint : [http://localhost:3000/brand]
+   input json :
+   {
+      "name" : "Indomaret"
+   }
+
+2. Add Voucher
+   Endpoint : [http://localhost:3000/voucher]
+   input json :
+   {
+    "name" : "Voucher Indomaret",
+    "discount" : 50,
+    "point" : 200,
+    "quantity" : 100,
+    "brand_id" : 2
+   }
+
+3. Get Voucher by Voucher ID
+   Endpoint : [http://localhost:3000/voucher/:id] 
+   example Endpoint : [http://localhost:3000/voucher/2]
+
+4. Get Voucher by Brand ID
+   Endpoint : [http://localhost:3000/voucher/brand/:id] 
+   example Endpoint : [http://localhost:3000/voucher/brand/2]
+
+5. Redeem Voucher (Transactions)
+   Endpoint : [http://localhost:3000/transaction/redemption]
+   input json :
+   {  
+      "customer_id": 1,  
+      "vouchers": [  
+         {  
+            "voucher_id": 1,  
+            "quantity": 2  
+         },  
+         {  
+            "voucher_id": 2,  
+            "quantity": 1  
+         }  
+      ]  
+   }  
+
+
+6. Get Transactions by ID
+   Endpoint : [http://localhost:3000/transaction/redemption/:id]
+   example Endpoint : [http://localhost:3000/transaction/redemption/1]

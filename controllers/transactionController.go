@@ -94,3 +94,23 @@ func RedeemVouchers(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Vouchers redeemed successfully", "data": voucherRedeems, "transaction": transaction})
 }
+
+func GetTransactionByID(c *gin.Context) {
+	ID := c.Param("id")
+
+	tx := initializers.DB.Begin()
+
+	var transaction models.Transaction
+	if err := tx.Where("id = ?", ID).Preload("VoucherItems").Preload("VoucherItems.Voucher").Preload("VoucherItems.Voucher.Brand").Find(&transaction).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Transaction not found"})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get Transaction details", "details": err.Error()})
+		return
+	}
+
+	tx.Commit()
+
+	c.JSON(http.StatusOK, gin.H{"message": "Get transaction details successfully", "data": transaction})
+}
