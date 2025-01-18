@@ -104,16 +104,42 @@
    ```
 
 3. Get Voucher by Voucher ID
-   Endpoint : [http://localhost:3000/voucher/:id] 
-   example Endpoint : [http://localhost:3000/voucher/2]
+
+   Endpoint : 
+   
+   ```
+   http://localhost:3000/voucher/:id 
+   ```
+   
+   example Endpoint : 
+   
+   ```
+   http://localhost:3000/voucher/2
+   ```
 
 4. Get Voucher by Brand ID
-   Endpoint : [http://localhost:3000/voucher/brand/:id] 
-   example Endpoint : [http://localhost:3000/voucher/brand/2]
+   Endpoint : 
+   
+   ```
+   http://localhost:3000/voucher/brand/:id 
+   ```
+   
+   example Endpoint : 
+   
+   ```
+   http://localhost:3000/voucher/brand/2
+   ```
 
 5. Redeem Voucher (Transactions)
-   Endpoint : [http://localhost:3000/transaction/redemption]
+   Endpoint : 
+   
+   ```
+   http://localhost:3000/transaction/redemption
+   ```
+   
    input json :
+
+   ```
    {  
       "customer_id": 1,  
       "vouchers": [  
@@ -127,8 +153,18 @@
          }  
       ]  
    }  
+   ```
 
 
 6. Get Transactions by ID
-   Endpoint : [http://localhost:3000/transaction/redemption/:id]
-   example Endpoint : [http://localhost:3000/transaction/redemption/1]
+   Endpoint : 
+   
+   ```
+   http://localhost:3000/transaction/redemption/:id
+   ```
+   
+   example Endpoint : 
+   
+   ```
+   http://localhost:3000/transaction/redemption/1
+   ```
